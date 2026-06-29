@@ -1,1 +1,1 @@
-"""tf - TODO: add description."""
+"""tf - terraform alias."""
