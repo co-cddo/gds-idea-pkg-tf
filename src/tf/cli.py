@@ -10,8 +10,10 @@ def cli(ctx):
 @cli.command()
 def init():
     """'terraform init --upgrade' command executed in working folder and modules subfolders"""
+    from tf.prerequisites import _check_prerequisites
     from tf.tf import _init
 
+    _check_prerequisites()
     _init()
 
 
@@ -53,3 +55,11 @@ def clear():
     from tf.tf import _clear
 
     _clear()
+
+
+@cli.command()
+def cache():
+    """creates .terraformrc file and required folders to cache tf providers"""
+    from tf.tf import _cache
+
+    _cache()

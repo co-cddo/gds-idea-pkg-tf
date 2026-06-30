@@ -67,3 +67,12 @@ def _clear():
             if file_rm in dirs:
                 click.echo(f"remove modules/{module}/{file_rm} file")
                 os.remove(os.path.join(subfolder, module, file_rm))
+
+
+def _cache():
+    os.makedirs(os.path.join(os.path.expanduser("~"), "backup", "terraform-cache"), exist_ok=True)
+
+    with open(os.path.join(os.path.expanduser("~"), ".terraformrc"), "w") as f:
+        f.write('plugin_cache_dir = "$HOME/backup/terraform-cache"' + "\n")
+        f.write("disable_checkpoint = true" + "\n")
+        f.write("plugin_cache_may_break_dependency_lock_file = true")
