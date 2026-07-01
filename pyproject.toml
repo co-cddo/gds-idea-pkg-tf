@@ -1,13 +1,18 @@
 [project]
 name = "gds-idea-pkg-tf"
-description = "TODO: add description"
+description = "Terraform alias"
 readme = "README.md"
 authors = [
     { name = "Jarek-Rolski", email = "jaroslaw.rolski@yahoo.com" }
 ]
 requires-python = ">=3.11"
-dependencies = []
+dependencies = [
+    "click>=8.4.2",
+]
 dynamic = ["version"]
+
+[project.scripts]
+tf = "tf.cli:cli"
 
 [build-system]
 requires = ["hatchling", "hatch-vcs"]

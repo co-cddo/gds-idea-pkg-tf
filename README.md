@@ -1,6 +1,6 @@
 # gds-idea-pkg-tf
 
-_Brief description of your package._
+Terraform alias.
 
 ## Prerequisites
 
