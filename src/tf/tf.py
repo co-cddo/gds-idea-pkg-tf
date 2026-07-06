@@ -1,6 +1,7 @@
 import os
 import shutil
 import subprocess
+import sys
 
 import click
 
@@ -8,8 +9,8 @@ import click
 def _execute_command(command: list[str]):
     try:
         completed_process = subprocess.run(command, check=True, capture_output=False, text=True)
-    except subprocess.CalledProcessError as e:
-        raise e
+    except subprocess.CalledProcessError:
+        sys.exit(1)
 
     return completed_process
 
@@ -76,3 +77,21 @@ def _cache():
         f.write('plugin_cache_dir = "$HOME/backup/terraform-cache"' + "\n")
         f.write("disable_checkpoint = true" + "\n")
         f.write("plugin_cache_may_break_dependency_lock_file = true")
+
+
+def _workspace(workspace):
+    click.echo("Available workspaces:")
+    command = ["terraform", "workspace", "list"]
+    _execute_command(command)
+
+    if workspace == "dev":
+        workspace = "development"
+    elif workspace == "prod":
+        workspace = "production"
+
+    command = ["terraform", "workspace", "select", workspace]
+    _execute_command(command)
+
+    click.echo("Current workspace:")
+    command = ["terraform", "workspace", "show"]
+    _execute_command(command)
