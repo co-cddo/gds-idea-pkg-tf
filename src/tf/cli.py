@@ -3,6 +3,7 @@ import click
 
 @click.group()
 @click.pass_context
+@click.version_option(prog_name="tf", package_name="gds-idea-pkg-tf")
 def cli(ctx):
     """tf - terraform alias."""
 
@@ -63,3 +64,12 @@ def cache():
     from tf.tf import _cache
 
     _cache()
+
+
+@cli.command()
+@click.argument("workspace", default="dev")
+def w(workspace: str):
+    """show or select workspace"""
+    from tf.tf import _workspace
+
+    _workspace(workspace)
