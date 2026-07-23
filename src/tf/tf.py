@@ -6,9 +6,9 @@ import sys
 import click
 
 
-def _execute_command(command: list[str]):
+def _execute_command(command: list[str], capture_output=False):
     try:
-        completed_process = subprocess.run(command, check=True, capture_output=False, text=True)
+        completed_process = subprocess.run(command, check=True, capture_output=capture_output, text=True)
     except subprocess.CalledProcessError:
         sys.exit(1)
 
@@ -37,8 +37,10 @@ def _plan():
 
 
 def _show():
-    command = ["terraform", "show", "-no-color", "tf.plan", ">", "tfplan.txt"]
-    _execute_command(command)
+    command = ["terraform", "show", "-no-color", "tf.plan"]
+    completed_process = _execute_command(command, capture_output=True)
+    with open("tfplan.txt", "w") as f:
+        f.write(completed_process.stdout)
 
 
 def _apply():
